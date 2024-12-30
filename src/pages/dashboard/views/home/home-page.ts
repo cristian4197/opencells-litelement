@@ -1,8 +1,9 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement } from 'lit-element';
 import { PageController } from '@open-cells/page-controller';
 import { customElement } from 'lit/decorators.js';
 import { PageTransitionsMixin } from '@open-cells/page-transitions';
-import '../../../../components/toolbar/toolbar';
+
+import '../../../../shared/components/toolbar/toolbar';
 
 // @ts-ignore
 @customElement('dashboard-home-page')

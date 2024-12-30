@@ -1,7 +1,7 @@
 import { PageController } from "@open-cells/page-controller";
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import '../../components/login-form/login-form';
+import '../../components/login/login-form/login-form';
 import { Loading, Notify } from "notiflix";
 
 @customElement('login-page')

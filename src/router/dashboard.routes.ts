@@ -32,6 +32,14 @@ export const dashboardRoutes: RouteDefinition[] = [
     action: async () => {
       await import('../pages/dashboard/views/customers/customers-list-page.js');
     },
+  },
+  {
+    path: '/dashboard/countries/list',
+    name: 'dashboard-countries-list',
+    component: 'dashboard-countries-list-page',
+    action: async () => {
+      await import('../pages/dashboard/views/countries/countries.page.js');
+    },
   }
 
 ];

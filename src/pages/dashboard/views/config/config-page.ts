@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { PageController } from '@open-cells/page-controller';
 import { customElement } from 'lit/decorators.js';
-import '../../../../components/toolbar/toolbar';
+import '../../../../shared/components/toolbar/toolbar';
 
 import { PageTransitionsMixin } from '@open-cells/page-transitions';
 

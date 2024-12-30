@@ -1,14 +1,15 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ToolbarState } from './toolbar.state';
+import { getMenuItems } from './menu';
 
 @customElement('toolbar-component')
 export class ToolbarComponent extends LitElement {
-  @property({ type: Function }) onNavigate: (path: string) => void = () => {};
+  @property({ type: Function }) onNavigate: (path: string) => void = () => { };
   @state() private menuOpen: boolean = false;
   private toolbarState = ToolbarState.getInstance(); // Acceso al singleton
 
-  
+
   static styles = css`
     :host {
       display: block;
@@ -91,22 +92,32 @@ export class ToolbarComponent extends LitElement {
 
   private selectMenu(path: string) {
     this.toolbarState.activeMenu = path;
-    localStorage.setItem('activeMenu', this.toolbarState.activeMenu);
-    this.requestUpdate(); // Asegúrate de actualizar el estado del componente después de seleccionar un menú
+    if (path != 'login') {
+      localStorage.setItem('activeMenu', this.toolbarState.activeMenu);
+      this.clearSession(path);
+      return;
+    }
+
+  }
+
+  private clearSession(path: string) {
     this.closeMenu();
     this.onNavigate(path);
-   
   }
 
   private closeSession() {
     this.closeMenu();
+    //Reseteamos el menu activo a dashboard-home
+    localStorage.setItem('activeMenu', 'dashboard-home');
+    this.toolbarState.activeMenu = 'dashboard-home';
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('user');
     this.onNavigate('login');
   }
 
- 
+
   render() {
+    const menuItems = getMenuItems();
     return html`
       <div class="toolbar">
         <!-- Título del Toolbar y Botón de Menú -->
@@ -115,36 +126,22 @@ export class ToolbarComponent extends LitElement {
           <div class="menu-toggle" @click=${this.toggleMenu}>☰</div>
         </div>
         <!-- Opciones del Menú -->
+        <!-- Opciones del Menú -->
         <div class="menus ${this.menuOpen ? 'open' : ''}">
-          <div
-            class="menu-item ${this.toolbarState.activeMenu === 'dashboard-home' ? 'active' : ''}"
-            @click=${() => this.selectMenu('dashboard-home')}
-          >
-            <!--<span class="icon">🏠</span> <span>Inicio</span>-->
-            <span class="icon"><img src="../../icons/home.svg" alt="Icon"></span> <span>Inicio</span>
-          </div>
-          <div
-            class="menu-item ${this.toolbarState.activeMenu=== 'dashboard-customers-add'? 'active' : ''}"
-            @click=${() => this.selectMenu('dashboard-customers-add')}
-          >
-            <span class="icon"><img src="../../icons/customer-add.svg" alt="Icon"></span> <span>Nuevo Cliente</span>
-          </div>
-          <div
-            class="menu-item ${this.toolbarState.activeMenu=== 'dashboard-customers-list' ? 'active' : ''}"
-            @click=${() => this.selectMenu('dashboard-customers-list')}
-          >
-            <span class="icon"><img src="../../icons/customer-list.svg" alt="Icon"></span> <span>Consultar Clientes</span>
-          </div>
-          <div
-            class="menu-item ${this.toolbarState.activeMenu=== 'dashboard-config'? 'active' : ''}"
-            @click=${() => this.selectMenu('dashboard-config')}
-          >
-          <span class="icon"><img src="../../icons/config.svg" alt="Icon"></span> <span>Configuración</span>
-
-          </div>
-          <div class="menu-item" @click=${this.closeSession}>
-            <span class="icon"><img src="../../icons/logout.svg" alt="Icon"></span> <span>Cerrar Sesión</span>
-          </div>
+          ${menuItems.map(
+      menu => html`
+              <div
+              class="menu-item ${this.toolbarState.activeMenu === menu.path ? 'active' : ''}"
+              @click=${() =>
+          menu.path === 'login'
+            ? this.closeSession()
+            : this.selectMenu(menu.path)}
+              >
+              <span class="icon"><img src="${menu.icon}" alt="Icon"></span>
+              <span>${menu.name}</span>
+            </div>
+            `
+    )}
         </div>
       </div>
     `;
