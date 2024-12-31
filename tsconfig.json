@@ -1,29 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "es2020",
-    "lib": ["es2021", "DOM", "DOM.Iterable"],
-    "moduleResolution": "node",
-    "declaration": true,
-    "sourceMap": true,
-    "importHelpers": true,
-    "inlineSources": true,
-    "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "experimentalDecorators": true,
-    "useDefineForClassFields": false,
-    "allowJs": true,
-    "maxNodeModuleJsDepth": 2,
-    "noImplicitAny": true,
-    "emitDeclarationOnly": true,
-    "skipLibCheck": true,
-    "outDir": "./types",
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
+    "target": "es2021",                           // Mantén esta configuración
+    "module": "ESNext",                           // Cambié a "ESNext" para compatibilidad con Jest y módulos ES
+    "lib": ["es2021", "DOM", "DOM.Iterable"],      // Mantén las bibliotecas que usas
+    "moduleResolution": "node",                   // Correcto para compatibilidad con Node.js
+    "declaration": false,                         // Desactivado porque no necesitas generar archivos .d.ts para pruebas
+    "sourceMap": true,                            // Mantén la opción de generar mapas de fuentes
+    "importHelpers": true,                        // Importa helpers de TypeScript para optimizar
+    "inlineSources": true,                        // Mantén los archivos fuente inline para debugging
+    "strict": true,                               // Recomendado para evitar errores de tipo
+    "noFallthroughCasesInSwitch": true,           // Evita errores en switch cases
+    "noImplicitReturns": true,                    // Asegura que todas las funciones tengan un valor de retorno
+    "noUnusedLocals": true,                       // Asegura que no haya variables locales no usadas
+    "noUnusedParameters": true,                   // Asegura que no haya parámetros no usados
+    "experimentalDecorators": true,               // Mantén habilitados los decoradores experimentales
+    "useDefineForClassFields": false,             // Deja esta opción desactivada si no usas propiedades de clase definidas
+    "allowJs": true,                              // Permite archivos JavaScript junto con TypeScript
+    "maxNodeModuleJsDepth": 2,                    // Mantiene la profundidad de búsqueda de archivos JS
+    "noImplicitAny": true,                        // Requiere que todos los tipos sean explícitos
+    "emitDeclarationOnly": false,                 // Desactivado porque no necesitas solo archivos de declaración
+    "skipLibCheck": true,                         // Mantén para omitir la comprobación de tipos en bibliotecas
+    "outDir": "./dist",                           // Salida en ./dist para los archivos compilados (en lugar de ./types)
+    "allowSyntheticDefaultImports": true,         // Permite importaciones predeterminadas sintéticas
+    "forceConsistentCasingInFileNames": true,     // Asegura que las rutas de archivo sean consistentes en cuanto a mayúsculas
+    "isolatedModules": false,                     // Desactivado, ya que puede interferir con Jest en algunos casos
+    "esModuleInterop": true                       // Asegura la interoperabilidad con módulos CommonJS
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]                     // Excluir node_modules para evitar compilación innecesaria
 }
