@@ -26,6 +26,6 @@
     "isolatedModules": false,                     // Desactivado, ya que puede interferir con Jest en algunos casos
     "esModuleInterop": true                       // Asegura la interoperabilidad con módulos CommonJS
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "src/pages/dashboard/views/countries/countries.page.css.js", "src/pages/dashboard/views/customers/customers-add-page.cssjs", "src/pages/dashboard/views/customers/customers-list-page.css.js", "src/pages/login/login-page.css.js"],
   "exclude": ["node_modules"]                     // Excluir node_modules para evitar compilación innecesaria
 }

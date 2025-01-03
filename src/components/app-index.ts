@@ -2,10 +2,10 @@ import { startApp } from '@open-cells/core';
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { ElementController } from '@open-cells/element-controller';
-import { routes } from '../router/routes.js';
-import { styles } from './app-index.css.js';
+import { routes } from '../router/routes';
+import { styles } from './app-index.css';
 import { InterceptorFunction } from '@open-cells/core/types/bridge.js';
-import { interceptor } from '../router/interceptors/auth.interceptor.js';
+import { interceptor } from '../router/interceptors/auth.interceptor';
 
 startApp({
   routes,

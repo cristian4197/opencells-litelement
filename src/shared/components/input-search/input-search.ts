@@ -85,7 +85,7 @@ export class InputSearchComponent extends LitElement {
 @property({ type: String }) placeholder = 'Buscar...';
 @property({ type: String }) selectedCountry = ''; // Esta propiedad se enlaza con la región seleccionada
 
-onSearch(event: Event) {
+onSearch(_event: Event) {
   const inputElement = this.shadowRoot?.querySelector('input');
   if (inputElement) {
     const value = inputElement.value;

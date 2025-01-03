@@ -5,11 +5,13 @@ import '../../../../shared/components/toolbar/toolbar';
 import { Notify } from 'notiflix';
 import { ICustomer } from '../../interfaces/customer';
 import { PageTransitionsMixin } from '@open-cells/page-transitions';
+import { styles } from './customers-add-page.css.js';
 
 // @ts-ignore
 @customElement('dashboard-customers-add-page')
 export class DasboardCustomerAddPage extends PageTransitionsMixin(LitElement) {
   pageController: PageController;
+  static styles = styles;
 
   constructor() {
     super();
@@ -99,11 +101,6 @@ export class DasboardCustomerAddPage extends PageTransitionsMixin(LitElement) {
     console.log('Cliente registrado:', newClient);
   }
 
-  protected createRenderRoot(): HTMLElement | DocumentFragment {
-    // @ts-ignore
-    return this;
-  }
-
   // Función de navegación
   private navigate(path: string) {
     this.pageController.navigate(path);
@@ -112,6 +109,7 @@ export class DasboardCustomerAddPage extends PageTransitionsMixin(LitElement) {
 
   render() {
     return html`
+    <main>
          <!-- Toolbar -->
          <toolbar-component .onNavigate="${this.navigate.bind(this)}"></toolbar-component>
          <h2>Registrar Cliente</h2>
@@ -191,6 +189,7 @@ export class DasboardCustomerAddPage extends PageTransitionsMixin(LitElement) {
              Guardar Cliente
            </button>
          </form>
+    </main>
     `;
   }
 }

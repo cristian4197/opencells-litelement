@@ -41,10 +41,13 @@ export class DasboardConfigPage extends PageTransitionsMixin(LitElement) {
 
   render() {
     return html`
-         <!-- Toolbar -->
-         <toolbar-component .onNavigate="${this.navigate.bind(this)}"></toolbar-component>
+    <main>
+      <!-- Toolbar -->
+      <toolbar-component .onNavigate="${this.navigate.bind(this)}"></toolbar-component>
 
       <h2>Dashboard Config</h2>
+    </main>
+
     `;
   }
 }

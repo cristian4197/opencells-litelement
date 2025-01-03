@@ -1,6 +1,8 @@
+import { css } from "lit";
+
+export const styles = css`
 :host {
   display: block;
-  max-width: 400px;
   margin: 20px auto;
   padding: 20px;
   background-color: #f7f7f7;
@@ -70,3 +72,5 @@ input:focus {
   width: 18px;
   height: 18px;
 }
+
+`;

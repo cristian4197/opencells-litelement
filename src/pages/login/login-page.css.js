@@ -1,3 +1,6 @@
+import { css } from 'lit';
+
+export const styles = css`
 .login {
   background-color: #f7f7f7;
   width: 100%;
@@ -17,3 +20,4 @@
   flex-direction: column;
   align-items: center;
 }
+`;

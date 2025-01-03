@@ -1,5 +1,5 @@
 import { RouteDefinition } from '@open-cells/core/types'; 
-import { dashboardRoutes } from './dashboard.routes.js';
+import { dashboardRoutes } from './dashboard.routes';
 
 export const routes: RouteDefinition[] = [
   {

@@ -48,7 +48,7 @@ export class TableCountries extends LitElement {
                     : 'No disponible'}
                   </td>
                   <td><img src="${country.flags.svg}" class="flag" alt="flag"></td>
-                  <td>${country.latlng}</td>
+                  <td>${country.latlng.join(', ')}</td>
                 </tr>
               `
         )

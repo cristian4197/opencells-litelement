@@ -3,10 +3,13 @@ import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import '../../components/login/login-form/login-form';
 import { Loading, Notify } from "notiflix";
+import { styles } from "./login-page.css";
 
 @customElement('login-page')
 export class LoginPage extends LitElement {
   pageController: PageController;
+
+   static styles = styles;
 
   constructor() {
     super();
@@ -45,12 +48,6 @@ export class LoginPage extends LitElement {
 
   private hideNotificacionSuccesLogin(): void {
     Loading.remove();
-  }
-
-
-  protected createRenderRoot(): HTMLElement | DocumentFragment {
-    // @ts-ignore
-    return this;
   }
 
   render() {

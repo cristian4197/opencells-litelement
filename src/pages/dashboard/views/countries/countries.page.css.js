@@ -1,11 +1,27 @@
+import { css } from 'lit';
+
+export const styles = css`
+main {
+  height: 100vh;
+  overflow-y: auto;
+}
+.countries-title {
+  text-align: center;
+}
+.countries-title h2 {
+  margin-bottom: 10px;
+}
 .countries-list {
-  margin-bottom: 20px;
+  margin-bottom: 120px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .countries-list_detail {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 40px;
 }
 
 .table-country {
@@ -61,3 +77,39 @@
   margin: 10px 0;
   color: #333;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.page-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.page-button:hover {
+  background-color: #0056b3;
+}
+
+.page-info {
+  font-size: 16px;
+  margin: 0 10px;
+  color: #333;
+}
+
+`;

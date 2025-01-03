@@ -1,6 +1,5 @@
-import { LitElement, ReactiveController, ReactiveControllerHost, html } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import { customElement, state } from 'lit/decorators.js';
-import { PageTransitionsMixin } from '@open-cells/page-transitions';
 import { PageController } from '@open-cells/page-controller';
 import '../../../../shared/components/toolbar/toolbar';
 import '../../../../components/dashboard/select-filter/select-filter';
@@ -10,12 +9,12 @@ import { Task } from '@lit/task';
 import { ICountry } from '../../interfaces/country';
 import { CountriesService } from '../../services/countries.service';
 import { ISelectFilter } from '../../../../components/dashboard/interfaces/select-filter';
+import { styles } from './countries.page.css';
 
 
 //@ts-ignore
 @customElement('dashboard-countries-list-page')
-export class CountriesPage extends PageTransitionsMixin(LitElement) implements ReactiveControllerHost {
-  private _controllers = new Set<ReactiveController>();
+export class CountriesPage extends LitElement {
   @state() private countries: ICountry[] = [];
   @state() private currentPage: number = 1;
   @state() private searchCountryByName: string = '';
@@ -31,27 +30,13 @@ export class CountriesPage extends PageTransitionsMixin(LitElement) implements R
   private typeOfSearch: 'name' | 'region' | 'all'= 'all';
   private countriesPerPage: number = 5;
   private pageController: PageController;
+  static styles = styles;
 
   constructor() {
     super();
     this.pageController = new PageController(this);
   }
 
-  addController(controller: ReactiveController): void {
-    this._controllers.add(controller);
-  }
-
-  removeController(controller: ReactiveController): void {
-    this._controllers.delete(controller);
-  }
-
-  requestUpdate(name?: PropertyKey, oldValue?: unknown): void {
-    super.requestUpdate(name, oldValue);
-  }
-
-  get updateComplete(): Promise<boolean> {
-    return super.updateComplete;
-  }
 
   private async fetchCountries(signal: AbortSignal, typeOfSearch: 'name' | 'region' | 'all'): Promise<ICountry[]> {
     const countryMap: { [key: string]: () => Promise<ICountry[]> } = {
@@ -118,21 +103,12 @@ export class CountriesPage extends PageTransitionsMixin(LitElement) implements R
     this.pageController.navigate(path);
   }
 
-  protected createRenderRoot(): HTMLElement | DocumentFragment {
-    // @ts-ignore
-    return this; // No utilizamos Shadow DOM
-  }
 
   connectedCallback() {
     super.connectedCallback();
     this._countriesTask.run(); // Ejecutamos la tarea al conectar el componente
-    this.loadTransition();
   }
 
-  private loadTransition(): void {
-    this.pageTransitionType = 'verticalUp';
-    this.pageTransitionDuration = 800;
-  }
 
   handleSelectOption(event: CustomEvent) {
     const optionSelected = event.detail;
@@ -155,56 +131,62 @@ export class CountriesPage extends PageTransitionsMixin(LitElement) implements R
 
   render() {
     return html`
-      <!-- Toolbar -->
-      <toolbar-component .onNavigate="${this.navigate.bind(this)}"></toolbar-component>
-      <h2>Countries Page</h2>
-      <div class="countries-list">
-        ${this._countriesTask.render({
-      pending: () => html`<p>Loading countries...</p>`,
-      complete: (_) => html`
-            <div class="countries-list_detail">
-              <div class="input-search">
-                <input-search placeholder="Búsqueda por País" @search="${this.handleSearch}"
-                .selectedCountry="${this.searchCountryByName}"></input-search>
-              </div>
-              <div>
-                <h1>Filtros</h1>
-              </div>
-              <div class="filters">
-                <select-filter
-                @option-selected="${this.handleSelectOption}"
-                .labelForSelection="${this.labelForSelection}"
-                .selectOptions="${this.selectOptions}" 
-                .selectedRegion="${this.selectedRegion}"></select-filter >            
-                </div>
-              <div class="table-country">
-                <table-countries .countries="${this.currentCountries}"></table-countries>
-              </div>
-              <div class="pagination">
-                <button
-                  class="page-button"
-                  @click="${this.prevPage}"
-                  ?disabled="${this.currentPage === 1}"
-                >
-                  Anterior
-                </button>
-                <span class="page-info">
-                  Página ${this.currentPage} de ${this.totalPages}
-                </span>
-                <button
-                  class="page-button"
-                  @click="${this.nextPage}"
-                  ?disabled="${this.currentPage === this.totalPages}"
-                >
-                  Siguiente
-                </button>
-              </div>
+    <main>
+            <!-- Toolbar -->
+            <toolbar-component .onNavigate="${this.navigate.bind(this)}"></toolbar-component>
+            <div class="countries-title">
+              <h2>Countries Page</h2>
             </div>
            
-          `,
-      error: (e) => html`<p>Error: ${(e as Error).message}</p>`
-    })}
-      </div>
+            <div class="countries-list">
+              ${this._countriesTask.render({
+            pending: () => html`<p>Loading countries...</p>`,
+            complete: (_) => html`
+                  <div class="countries-list_detail">
+                    <div class="input-search">
+                      <input-search placeholder="Búsqueda por País" @search="${this.handleSearch}"
+                      .selectedCountry="${this.searchCountryByName}"></input-search>
+                    </div>
+                    <div class="filters-title">
+                      <h3>Filtros</h3>
+                    </div>
+                    <div class="filters">
+                      <select-filter
+                      @option-selected="${this.handleSelectOption}"
+                      .labelForSelection="${this.labelForSelection}"
+                      .selectOptions="${this.selectOptions}" 
+                      .selectedRegion="${this.selectedRegion}"></select-filter >            
+                      </div>
+                    <div class="table-country">
+                      <table-countries .countries="${this.currentCountries}"></table-countries>
+                    </div>
+                    <div class="pagination">
+                      <button
+                        class="page-button"
+                        @click="${this.prevPage}"
+                        ?disabled="${this.currentPage === 1}"
+                      >
+                        Anterior
+                      </button>
+                      <span class="page-info">
+                        Página ${this.currentPage} de ${this.totalPages}
+                      </span>
+                      <button
+                        class="page-button"
+                        @click="${this.nextPage}"
+                        ?disabled="${this.currentPage === this.totalPages}"
+                      >
+                        Siguiente
+                      </button>
+                    </div>
+                  </div>
+                 
+                `,
+            error: (e) => html`<p>Error: ${(e as Error).message}</p>`
+          })}
+            </div>
+    </main>
+
     `;
   }
 }
